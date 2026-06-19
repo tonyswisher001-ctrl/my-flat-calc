@@ -3,93 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Твой первый шаг к квартире</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #eef2f7;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            max-width: 450px;
-            width: 100%;
-        }
-        h1 { color: #2c3e50; font-size: 24px; text-align: center; margin-top: 0; }
-        p.subtitle { color: #7f8c8d; text-align: center; font-size: 14px; margin-bottom: 25px; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-weight: 6px; margin-bottom: 8px; color: #34495e; }
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #dcdde1;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 16px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        input:focus { border-color: #3498db; }
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            background-color: #3498db;
-            color: white;
-            text-align: center;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .btn:hover { background-color: #2980b9; }
-        .result-box {
-            margin-top: 25px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-left: 4px solid #2ecc71;
-            border-radius: 4px;
-            display: none;
-        }
-        .result-title { font-weight: bold; color: #2c3e50; margin-bottom: 5px; }
-        .result-val { font-size: 20px; color: #2ecc71; font-weight: bold; }
-    </style>
+    <title>Копим на квартиру — Умный финансовый помощник</title>
+    <!-- Подключаем Tailwind CSS для крутого дизайна -->
+    <script src="https://jsdelivr.net"></script>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
-    <div class="container">
-        <h1>Копим на квартиру 🏠</h1>
-        <p class="subtitle">Рассчитай план накоплений на первоначальный взнос за 1 минуту</p>
-        
-        <div class="form-group">
-            <label for="price">Желаемая стоимость квартиры (руб):</label>
-            <input type="number" id="price" placeholder="Например, 6000000" value="5000000">
+    <!-- 1. ГЛАВНЫЙ ЭКРАН -->
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20 px-4 text-center shadow-lg">
+        <div class="max-w-3xl mx-auto">
+            <span class="bg-blue-500/30 text-blue-200 text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full">Проект для молодежи</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold mt-4 tracking-tight">Своя квартира — это реально 🏠</h1>
+            <p class="text-lg text-blue-100 mt-4 max-w-xl mx-auto">Перестань откладывать мечту на потом. Рассчитай четкий план накоплений на первоначальный взнос прямо сейчас.</p>
+            <a href="#calc-section" class="inline-block mt-8 bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-8 py-4 rounded-xl shadow-md transform hover:-translate-y-0.5 transition-all">Узнать свой план</a>
         </div>
+    </header>
 
-        <div class="form-group">
-            <label for="years">За сколько лет нужно накопить?</label>
-            <input type="number" id="years" placeholder="Например, 3" value="3">
+    <!-- 2. БЛОК С КАЛЬКУЛЯТОРОМ -->
+    <main class="max-w-6xl mx-auto px-4 py-16" id="calc-section">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            
+            <!-- Форма -->
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">Финансовый калькулятор</h2>
+                
+                <div class="mb-5">
+                    <label class="block text-sm font-medium text-slate-700 mb-2">Ориентировочная стоимость жилья (₽)</label>
+                    <input type="number" id="price" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-lg" value="6000000">
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-slate-700 mb-2">Срок накопления (в годах)</label>
+                    <input type="number" id="years" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-lg" value="3">
+                </div>
+
+                <button onclick="calculateGoal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-sm transition-colors text-center cursor-pointer"> Рассчитать стратегию</button>
+
+                <!-- Результаты внутри формы -->
+                <div id="resultBox" class="mt-8 p-6 bg-slate-50 rounded-xl border-l-4 border-emerald-500 hidden">
+                    <p class="text-sm text-slate-500 font-medium">Необходимый первоначальный взнос (20%):</p>
+                    <p class="text-2xl font-bold text-slate-900 mt-1"><span id="vznosSum">0</span> ₽</p>
+                    
+                    <p class="text-sm text-slate-500 font-medium mt-4">Нужно откладывать каждый месяц:</p>
+                    <p class="text-3xl font-black text-emerald-600 mt-1"><span id="monthlySum">0</span> ₽/мес.</p>
+                </div>
+            </div>
+
+            <!-- Контент рядом с калькулятором -->
+            <div>
+                <h3 class="text-3xl font-bold text-slate-900 tracking-tight">Как накопить быстрее? ✨</h3>
+                <p class="text-slate-600 mt-4 leading-relaxed">Наш сервис не просто считает цифры. Мы помогаем выстроить привычку регулярных сбережений без жестких ограничений в качестве жизни.</p>
+                
+                <!-- Список преимуществ -->
+                <div class="mt-8 space-y-4">
+                    <div class="flex items-start gap-4">
+                        <div class="bg-blue-100 text-blue-600 p-2 rounded-lg mt-1 font-bold">1</div>
+                        <div>
+                            <h4 class="font-semibold text-slate-900">Используй автопополнения</h4>
+                            <p class="text-sm text-slate-600">Настрой в банковском приложении автоматический перевод 10% от любого дохода на отдельный накопительный счет.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="bg-blue-100 text-blue-600 p-2 rounded-lg mt-1 font-bold">2</div>
+                        <div>
+                            <h4 class="font-semibold text-slate-900">Капитализация процентов</h4>
+                            <p class="text-sm text-slate-600">Держи деньги на высокопроцентном вкладе. Так инфляция не съест твои накопления, а проценты будут растить сумму быстрее.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+    </main>
 
-        <button class="btn" onclick="calculateGoal()">Построить план</button>
+    <!-- ПОДВАЛ (ФУТЕР) -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm border-t border-slate-800">
+        <p>© 2026 Сервис умных накоплений. Разработано на практике с помощью ИИ.</p>
+    </footer>
 
-        <div class="result-box" id="resultBox">
-            <div class="result-title">Размер взноса (20%): <span id="vznosSum">0</span> руб.</div>
-            <div>Нужно откладывать ежемесячно:</div>
-            <div class="result-val"><span id="monthlySum">0</span> руб./мес.</div>
-        </div>
-    </div>
-
+    <!-- ЛОГИКА РАСЧЕТА -->
     <script>
         function calculateGoal() {
             const price = parseFloat(document.getElementById('price').value);
@@ -107,9 +99,8 @@
             document.getElementById('vznosSum').innerText = Math.round(vznos).toLocaleString('ru-RU');
             document.getElementById('monthlySum').innerText = Math.round(monthlyPay).toLocaleString('ru-RU');
             
-            document.getElementById('resultBox').style.display = 'block';
+            document.getElementById('resultBox').classList.remove('hidden');
         }
     </script>
-
 </body>
 </html>
