@@ -4,28 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Финансовый ИИ-Помощник | Ипотечный MVP</title>
-    <!-- Подключаем надежную версию Tailwind CSS и библиотеку графиков Chart.js -->
-    <script src="https://tailwindcss.com"></script>
+    <!-- Подключаем стабильную и проверенную библиотеку стилей -->
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <!-- Подключаем библиотеку графиков -->
     <script src="https://jsdelivr.net"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-        }
-    </script>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 font-sans transition-colors duration-200">
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
 
     <!-- ================= ЭКРАН 1: АВТОРИЗАЦИЯ ================= -->
-    <div id="screen-auth" class="flex items-center justify-center min-h-screen px-4">
-        <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl max-w-md w-full border border-slate-100 dark:border-slate-700">
+    <div id="screen-auth" class="flex items-center justify-center min-h-screen px-4 bg-gray-100">
+        <div class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full border border-gray-200">
             <div class="text-center mb-6">
-                <h1 class="text-3xl font-black text-indigo-600 dark:text-indigo-400">HypoSave 🏠</h1>
-                <p class="text-sm text-slate-400 mt-2">Сервис умного накопления на первый взнос</p>
+                <h1 class="text-3xl font-black text-indigo-600">HypoSave 🏠</h1>
+                <p class="text-sm text-gray-500 mt-2">Сервис умного накопления на первый взнос</p>
             </div>
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Ваша электронная почта</label>
-                    <input type="email" id="auth-email" placeholder="example@mail.ru" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-transparent outline-none focus:border-indigo-500 transition-all text-sm text-slate-900 dark:text-white">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Ваша электронная почта</label>
+                    <input type="email" id="auth-email" placeholder="example@mail.ru" class="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:border-indigo-500 transition-all text-sm text-gray-900">
                 </div>
                 <button onclick="login()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition-all cursor-pointer text-sm shadow-md">Войти в личный кабинет</button>
             </div>
@@ -35,41 +31,40 @@
     <!-- ================= ЭКРАН 2: ДАШБОРД (МОИ НАКОПЛЕНИЯ) ================= -->
     <div id="screen-dashboard" class="hidden min-h-screen flex flex-col">
         <!-- Хедер -->
-        <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-6 py-4 flex justify-between items-center shadow-sm">
-            <div class="font-black text-xl text-indigo-600 dark:text-indigo-400">HypoSave 🏠</div>
+        <header class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center shadow-sm">
+            <div class="font-black text-xl text-indigo-600">HypoSave 🏠</div>
             <div class="flex items-center gap-4">
-                <button onclick="toggleTheme()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 cursor-pointer">🌓</button>
-                <div class="text-sm font-medium opacity-80" id="user-display">user@mail.ru</div>
+                <div class="text-sm font-medium text-gray-600" id="user-display">user@mail.ru</div>
             </div>
         </header>
 
         <!-- Основной контент дашборда -->
         <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-10">
             <div class="flex justify-between items-center mb-8">
-                <h2 class="text-3xl font-bold tracking-tight">Мои накопления</h2>
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900">Мои накопления</h2>
                 <div class="relative">
-                    <button onclick="toggleAddMenu()" class="bg-indigo-600 hover:bg-indigo-700 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shadow-md cursor-pointer transition-transform hover:scale-105">+</button>
+                    <button onclick="toggleAddMenu()" class="bg-indigo-600 hover:bg-indigo-700 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shadow-md cursor-pointer transition-transform transform hover:scale-105">+</button>
                     <!-- Выпадающее меню добавления -->
-                    <div id="add-menu" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl shadow-xl z-50 overflow-hidden">
-                        <button onclick="addMortgageWidget()" class="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 font-medium flex items-center gap-2 text-slate-800 dark:text-white bg-white dark:bg-slate-800">🏢 Копить на Ипотеку</button>
+                    <div id="add-menu" class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-xl z-50 overflow-hidden">
+                        <button onclick="addMortgageWidget()" class="w-full text-left px-4 py-3 text-sm hover:bg-gray-100 font-medium flex items-center gap-2 text-gray-800 bg-white border-none cursor-pointer">🏢 Копить на Ипотеку</button>
                     </div>
                 </div>
             </div>
 
             <!-- Вкладки Активные / Завершенные -->
-            <div class="flex gap-6 border-b border-slate-200 dark:border-slate-700 mb-8 pb-3 text-sm font-semibold">
-                <button onclick="switchTab('active')" id="tab-active" class="text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400 pb-3">Активные</button>
-                <button onclick="switchTab('completed')" id="tab-completed" class="text-slate-400 hover:text-slate-600 pb-3">Завершенные</button>
+            <div class="flex gap-6 border-b border-gray-200 mb-8 pb-3 text-sm font-semibold">
+                <button onclick="switchTab('active')" id="tab-active" class="text-indigo-600 border-b-2 border-indigo-600 pb-3 bg-transparent border-none cursor-pointer focus:outline-none">Активные</button>
+                <button onclick="switchTab('completed')" id="tab-completed" class="text-gray-400 hover:text-gray-600 pb-3 bg-transparent border-none cursor-pointer focus:outline-none">Завершенные</button>
             </div>
 
             <!-- Сетка виджетов -->
             <div id="active-widgets" class="grid md:grid-cols-2 gap-6">
-                <div id="empty-state" class="col-span-2 text-center py-12 bg-white dark:bg-slate-800 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 text-slate-400">
-                    У вас пока нет активных целей. Нажмите на плюс вверху, чтобы добавить ипотечную цель.
+                <div id="empty-state" class="col-span-2 text-center py-12 bg-white rounded-2xl border-2 border-dashed border-gray-200 text-gray-400">
+                    У вас пока нет active целей. Нажмите на плюс вверху, чтобы добавить ипотечную цель.
                 </div>
             </div>
 
-            <div id="completed-widgets" class="hidden col-span-2 text-center py-12 text-slate-400">
+            <div id="completed-widgets" class="hidden col-span-2 text-center py-12 text-gray-400">
                 Нет завершенных целей.
             </div>
         </main>
@@ -77,46 +72,46 @@
 
     <!-- ================= ЭКРАН 3: АНАЛИЗ ТЕКУЩЕГО СОСТОЯНИЯ ================= -->
     <div id="screen-analytics" class="hidden min-h-screen py-10 px-4 max-w-4xl mx-auto">
-        <button onclick="showScreen('screen-dashboard')" class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 mb-6 flex items-center gap-2 cursor-pointer">← Вернуться на Дашборд</button>
+        <button onclick="showScreen('screen-dashboard')" class="text-sm font-semibold text-indigo-600 mb-6 flex items-center gap-2 border-none bg-transparent cursor-pointer">← Вернуться на Дашборд</button>
         
-        <h2 class="text-3xl font-extrabold mb-2">Анализ текущего состояния цели</h2>
-        <p class="text-slate-400 text-sm mb-8">Шаг 1 из 2: Оценка вашего финансового здоровья и составление ИИ-стратегии</p>
+        <h2 class="text-3xl font-extrabold mb-2 text-gray-900">Анализ текущего состояния цели</h2>
+        <p class="text-gray-400 text-sm mb-8">Шаг 1 из 2: Оценка вашего финансового здоровья и составление ИИ-стратегии</p>
 
-        <div class="grid md:grid-cols-2 gap-8 bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+        <div class="grid md:grid-cols-2 gap-8 bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
             <!-- Поля ввода -->
             <div class="space-y-5">
                 <div>
-                    <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Сколько денег на руках (₽)</label>
-                    <input type="number" id="input-cash" value="300000" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-transparent outline-none focus:border-indigo-500 text-sm text-slate-900 dark:text-white">
+                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Сколько денег на руках (₽)</label>
+                    <input type="number" id="input-cash" value="300000" class="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:border-indigo-500 text-sm text-gray-900 bg-white">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Ваши ежемесячные активы/доходы (₽)</label>
-                    <input type="number" id="input-assets" value="120000" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-transparent outline-none focus:border-indigo-500 text-sm text-slate-900 dark:text-white">
+                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Ваши ежемесячные активы/доходы (₽)</label>
+                    <input type="number" id="input-assets" value="120000" class="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:border-indigo-500 text-sm text-gray-900 bg-white">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Ваши ежемесячные пассивы/траты (₽)</label>
-                    <input type="number" id="input-liabilities" value="70000" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-transparent outline-none focus:border-indigo-500 text-sm text-slate-900 dark:text-white">
+                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Ваши ежемесячные пассивы/траты (₽)</label>
+                    <input type="number" id="input-liabilities" value="70000" class="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:border-indigo-500 text-sm text-gray-900 bg-white">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Ожидаемая инфляция (%)</label>
-                    <input type="number" id="input-inflation" value="8" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-transparent outline-none focus:border-indigo-500 text-sm text-slate-900 dark:text-white">
+                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Ожидаемая инфляция (%)</label>
+                    <input type="number" id="input-inflation" value="8" class="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:border-indigo-500 text-sm text-gray-900 bg-white">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Стоимость недвижимости мечты (₽)</label>
-                    <input type="number" id="input-realty-price" value="6000000" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-transparent outline-none focus:border-indigo-500 text-sm text-slate-900 dark:text-white">
+                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Стоимость недвижимости мечты (₽)</label>
+                    <input type="number" id="input-realty-price" value="6000000" class="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:border-indigo-500 text-sm text-gray-900 bg-white">
                 </div>
-                <button onclick="runFinancialAnalysis()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl cursor-pointer text-sm transition-all shadow-md mt-4">Рассчитать и получить советы ИИ</button>
+                <button onclick="runFinancialAnalysis()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl cursor-pointer text-sm transition-all shadow-md mt-4 border-none">Рассчитать и получить советы ИИ</button>
             </div>
 
             <!-- Рекомендации ИИ -->
-            <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between">
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 flex flex-col justify-between">
                 <div>
-                    <h4 class="font-bold text-indigo-600 dark:text-indigo-400 text-sm mb-3">📋 Автоматические рекомендации ИИ:</h4>
-                    <div id="ai-recommendations" class="text-xs space-y-3 text-slate-600 dark:text-slate-300 leading-relaxed">
+                    <h4 class="font-bold text-indigo-600 text-sm mb-3">📋 Автоматические рекомендации ИИ:</h4>
+                    <div id="ai-recommendations" class="text-xs space-y-3 text-gray-600 leading-relaxed">
                         Введите данные слева и нажмите расчет, чтобы ИИ-агент составил стратегию снижения пассивов и масштабирования капитала.
                     </div>
                 </div>
-                <div class="mt-6 p-4 bg-indigo-50 dark:bg-indigo-950/30 rounded-lg text-xs text-indigo-700 dark:text-indigo-300">
+                <div class="mt-6 p-4 bg-indigo-50 rounded-lg text-xs text-indigo-700">
                     <p class="font-semibold">💡 Интеграция с Telegram:</p>
                     <p class="mt-1 opacity-80">Ваш аккаунт синхронизирован с ботом @HypoSaveBot. Ваши ежедневные траты из мессенджера автоматически обновляют поле "Пассивы".</p>
                 </div>
@@ -125,12 +120,32 @@
 
         <!-- Результаты -->
         <div id="analytics-results" class="hidden mt-12 space-y-12">
-            <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
-                <h3 class="text-xl font-bold mb-4">График прогноза накопления капитала</h3>
-                <div class="h-64">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+                <h3 class="text-xl font-bold mb-4 text-gray-900">График прогноза накопления капитала</h3>
+                <div class="h-64 relative" style="height: 300px;">
                     <canvas id="forecastChart"></canvas>
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
-                <div class="p-6 border-b border-slate-100 dark:border-slate-700">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="p-6 border-b border-gray-200">
+                    <h3 class="text-xl font-bold text-gray-900">Таблица годового планирования</h3>
+                </div>
+                <table class="w-full text-left border-collapse text-sm">
+                    <thead>
+                        <tr class="bg-gray-100 text-gray-500 uppercase text-xs tracking-wider">
+                            <th class="p-4">Период</th>
+                            <th class="p-4">Ваш капитал (с учетом инфляции)</th>
+                            <th class="p-4">Ожидаемый взнос (20%)</th>
+                            <th class="p-4">Статус цели</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body" class="text-gray-700">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- КНОПКА СВЯЗИ С КУРАТОРОМ -->
+    <div class="fixed bottom-6 right-6 z-50">
