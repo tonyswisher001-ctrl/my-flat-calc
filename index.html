@@ -4,148 +4,196 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Финансовый ИИ-Помощник | Ипотечный MVP</title>
-    <!-- Подключаем стабильную и проверенную библиотеку стилей -->
-    <link href="https://jsdelivr.net" rel="stylesheet">
-    <!-- Подключаем библиотеку графиков -->
     <script src="https://jsdelivr.net"></script>
+    <style>
+        /* Чистый автономный CSS-дизайн */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .hidden { display: none !important; }
+        
+        /* Экран авторизации */
+        .auth-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .auth-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+        
+        /* Элементы форм */
+        h1 { color: #4f46e5; margin: 0 0 10px 0; font-size: 28px; font-weight: 900; }
+        h2 { font-size: 24px; font-weight: 800; margin-bottom: 20px; color: #111827; }
+        label { display: block; text-align: left; font-size: 11px; font-weight: 700; uppercase; color: #9ca3af; margin-bottom: 6px; letter-spacing: 0.5px; }
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid #d1d5db;
+            font-size: 14px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        input:focus { border-color: #4f46e5; }
+        
+        /* Кнопки */
+        button {
+            width: 100%;
+            background-color: #4f46e5;
+            color: white;
+            font-weight: 700;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        button:hover { background-color: #4338ca; }
+        .btn-green { background-color: #10b981; }
+        .btn-green:hover { background-color: #059669; }
+        
+        /* Хедер */
+        header {
+            background: white;
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-b: 1px solid #e5e7eb;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .logo { font-weight: 900; font-size: 20px; color: #4f46e5; }
+        
+        /* Дашборд */
+        main { max-w: 1000px; width: 90%; mx: auto; margin: 40px auto; padding: 0 20px; }
+        .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .plus-btn { width: 40px; height: 40px; border-radius: 50%; font-size: 20px; padding: 0; display: flex; align-items: center; justify-content: center; }
+        
+        /* Виджеты */
+        .widget-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .empty-box { grid-column: 1/-1; text-align: center; padding: 48px; background: white; border-radius: 16px; border: 2px dashed #e5e7eb; color: #9ca3af; }
+        .mortgage-card { background: white; padding: 24px; border-radius: 16px; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.01); }
+        
+        /* Прогресс-бар */
+        .progress-container { width: 100%; bg-color: #f3f4f6; background: #f3f4f6; h: 8px; height: 8px; border-radius: 4px; overflow: hidden; margin: 15px 0 25px 0; }
+        .progress-bar { height: 100%; background: #4f46e5; width: 25%; }
+        
+        /* Меню добавления */
+        .dropdown { position: relative; }
+        .dropdown-menu { position: absolute; right: 0; mt: 8px; margin-top: 8px; background: white; border: 1px solid #e5e7eb; border-radius: 12px; shadow: 0 10px 15px rgba(0,0,0,0.05); box-shadow: 0 10px 15px rgba(0,0,0,0.05); z-index: 100; overflow: hidden; }
+        .dropdown-item { width: 100%; padding: 12px 24px; text-align: left; background: none; color: #1f2937; font-size: 13px; font-weight: 500; border-radius: 0; }
+        .dropdown-item:hover { background: #f9fafb; }
+        
+        /* Вкладки */
+        .tabs { display: flex; gap: 24px; border-bottom: 2px solid #e5e7eb; margin-bottom: 30px; }
+        .tab-btn { background: none; color: #9ca3af; width: auto; padding: 0 0 12px 0; border-radius: 0; font-weight: 6px; font-weight: 600; cursor: pointer; }
+        .tab-btn.active { color: #4f46e5; border-bottom: 2px solid #4f46e5; margin-bottom: -2px; }
+        
+        /* Страница аналитики */
+        .analytics-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; background: white; padding: 32px; border-radius: 20px; border: 1px solid #e5e7eb; }
+        @media (max-width: 768px) { .analytics-layout { grid-template-columns: 1fr; } }
+        .ai-box { background: #f9fafb; padding: 24px; border-radius: 12px; border: 1px solid #e5e7eb; }
+        .back-link { background: none; color: #4f46e5; text-align: left; width: auto; padding: 0; margin-bottom: 20px; font-weight: 600; }
+        
+        /* Таблицы */
+        table { width: 100%; border-collapse: collapse; margin-top: 30px; background: white; border-radius: 16px; overflow: hidden; border: 1px solid #e5e7eb; }
+        th, td { padding: 16px; text-align: left; border-bottom: 1px solid #e5e7eb; font-size: 14px; }
+        th { background: #f9fafb; color: #9ca3af; font-size: 11px; text-transform: uppercase; font-weight: 700; }
+        
+        /* Фиксированная кнопка куратора */
+        .curator-btn { position: fixed; bottom: 24px; right: 24px; background: #4f46e5; color: white; padding: 12px 24px; border-radius: 50px; font-weight: 700; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3); width: auto; }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+<body>
 
     <!-- ================= ЭКРАН 1: АВТОРИЗАЦИЯ ================= -->
-    <div id="screen-auth" class="flex items-center justify-center min-h-screen px-4 bg-gray-100">
-        <div class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full border border-gray-200">
-            <div class="text-center mb-6">
-                <h1 class="text-3xl font-black text-indigo-600">HypoSave 🏠</h1>
-                <p class="text-sm text-gray-500 mt-2">Сервис умного накопления на первый взнос</p>
-            </div>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Ваша электронная почта</label>
-                    <input type="email" id="auth-email" placeholder="example@mail.ru" class="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:border-indigo-500 transition-all text-sm text-gray-900">
-                </div>
-                <button onclick="login()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition-all cursor-pointer text-sm shadow-md">Войти в личный кабинет</button>
-            </div>
+    <div id="screen-auth" class="auth-container">
+        <div class="auth-card">
+            <h1>HypoSave 🏠</h1>
+            <p style="color: #9ca3af; font-size: 13px; margin-bottom: 24px;">Сервис умного накопления на первый взнос</p>
+            <label>Ваша электронная почта</label>
+            <input type="email" id="auth-email" placeholder="example@mail.ru">
+            <button onclick="login()">Войти в личный кабинет</button>
         </div>
     </div>
 
-    <!-- ================= ЭКРАН 2: ДАШБОРД (МОИ НАКОПЛЕНИЯ) ================= -->
-    <div id="screen-dashboard" class="hidden min-h-screen flex flex-col">
-        <!-- Хедер -->
-        <header class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center shadow-sm">
-            <div class="font-black text-xl text-indigo-600">HypoSave 🏠</div>
-            <div class="flex items-center gap-4">
-                <div class="text-sm font-medium text-gray-600" id="user-display">user@mail.ru</div>
-            </div>
+    <!-- ================= ЭКРАН 2: ДАШБОРД ================= -->
+    <div id="screen-dashboard" class="hidden">
+        <header>
+            <div class="logo">HypoSave 🏠</div>
+            <div style="font-size: 14px; font-weight: 500;" id="user-display">user@mail.ru</div>
         </header>
 
-        <!-- Основной контент дашборда -->
-        <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-10">
-            <div class="flex justify-between items-center mb-8">
-                <h2 class="text-3xl font-bold tracking-tight text-gray-900">Мои накопления</h2>
-                <div class="relative">
-                    <button onclick="toggleAddMenu()" class="bg-indigo-600 hover:bg-indigo-700 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shadow-md cursor-pointer transition-transform transform hover:scale-105">+</button>
-                    <!-- Выпадающее меню добавления -->
-                    <div id="add-menu" class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-xl z-50 overflow-hidden">
-                        <button onclick="addMortgageWidget()" class="w-full text-left px-4 py-3 text-sm hover:bg-gray-100 font-medium flex items-center gap-2 text-gray-800 bg-white border-none cursor-pointer">🏢 Копить на Ипотеку</button>
+        <main>
+            <div class="dash-header">
+                <h2>Мои накопления</h2>
+                <div class="dropdown">
+                    <button onclick="toggleAddMenu()" class="plus-btn">+</button>
+                    <div id="add-menu" class="dropdown-menu hidden">
+                        <button onclick="addMortgageWidget()" class="dropdown-item">🏢 Копить на Ипотеку</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Вкладки Активные / Завершенные -->
-            <div class="flex gap-6 border-b border-gray-200 mb-8 pb-3 text-sm font-semibold">
-                <button onclick="switchTab('active')" id="tab-active" class="text-indigo-600 border-b-2 border-indigo-600 pb-3 bg-transparent border-none cursor-pointer focus:outline-none">Активные</button>
-                <button onclick="switchTab('completed')" id="tab-completed" class="text-gray-400 hover:text-gray-600 pb-3 bg-transparent border-none cursor-pointer focus:outline-none">Завершенные</button>
+            <div class="tabs">
+                <button onclick="switchTab('active')" id="tab-active" class="tab-btn active">Активные</button>
+                <button onclick="switchTab('completed')" id="tab-completed" class="tab-btn">Завершенные</button>
             </div>
 
-            <!-- Сетка виджетов -->
-            <div id="active-widgets" class="grid md:grid-cols-2 gap-6">
-                <div id="empty-state" class="col-span-2 text-center py-12 bg-white rounded-2xl border-2 border-dashed border-gray-200 text-gray-400">
-                    У вас пока нет active целей. Нажмите на плюс вверху, чтобы добавить ипотечную цель.
+            <div id="active-widgets" class="widget-grid">
+                <div id="empty-state" class="empty-box">
+                    У вас пока нет активных целей. Нажмите на плюс вверху, чтобы добавить ипотечную цель.
                 </div>
-            </div>
-
-            <div id="completed-widgets" class="hidden col-span-2 text-center py-12 text-gray-400">
-                Нет завершенных целей.
             </div>
         </main>
     </div>
 
-    <!-- ================= ЭКРАН 3: АНАЛИЗ ТЕКУЩЕГО СОСТОЯНИЯ ================= -->
-    <div id="screen-analytics" class="hidden min-h-screen py-10 px-4 max-w-4xl mx-auto">
-        <button onclick="showScreen('screen-dashboard')" class="text-sm font-semibold text-indigo-600 mb-6 flex items-center gap-2 border-none bg-transparent cursor-pointer">← Вернуться на Дашборд</button>
-        
-        <h2 class="text-3xl font-extrabold mb-2 text-gray-900">Анализ текущего состояния цели</h2>
-        <p class="text-gray-400 text-sm mb-8">Шаг 1 из 2: Оценка вашего финансового здоровья и составление ИИ-стратегии</p>
+    <!-- ================= ЭКРАН 3: АНАЛИТИКА ================= -->
+    <div id="screen-analytics" class="hidden" style="max-width: 900px; margin: 40px auto; padding: 0 20px;">
+        <button onclick="showScreen('screen-dashboard')" class="back-link">← Вернуться на Дашборд</button>
+        <h2 style="margin-bottom: 5px;">Анализ текущего состояния цели</h2>
+        <p style="color: #9ca3af; font-size: 14px; margin-bottom: 30px;">Шаг 1 из 2: Оценка вашего финансового здоровья</p>
 
-        <div class="grid md:grid-cols-2 gap-8 bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
-            <!-- Поля ввода -->
-            <div class="space-y-5">
-                <div>
-                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Сколько денег на руках (₽)</label>
-                    <input type="number" id="input-cash" value="300000" class="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:border-indigo-500 text-sm text-gray-900 bg-white">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Ваши ежемесячные активы/доходы (₽)</label>
-                    <input type="number" id="input-assets" value="120000" class="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:border-indigo-500 text-sm text-gray-900 bg-white">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Ваши ежемесячные пассивы/траты (₽)</label>
-                    <input type="number" id="input-liabilities" value="70000" class="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:border-indigo-500 text-sm text-gray-900 bg-white">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Ожидаемая инфляция (%)</label>
-                    <input type="number" id="input-inflation" value="8" class="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:border-indigo-500 text-sm text-gray-900 bg-white">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Стоимость недвижимости мечты (₽)</label>
-                    <input type="number" id="input-realty-price" value="6000000" class="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:border-indigo-500 text-sm text-gray-900 bg-white">
-                </div>
-                <button onclick="runFinancialAnalysis()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl cursor-pointer text-sm transition-all shadow-md mt-4 border-none">Рассчитать и получить советы ИИ</button>
+        <div class="analytics-layout">
+            <div style="display: flex; flex-direction: column;">
+                <label>Сколько денег на руках (₽)</label>
+                <input type="number" id="input-cash" value="300000">
+                
+                <label>Ваши ежемесячные активы/доходы (₽)</label>
+                <input type="number" id="input-assets" value="120000">
+                
+                <label>Ваши ежемесячные пассивы/траты (₽)</label>
+                <input type="number" id="input-liabilities" value="70000">
+                
+                <label>Ожидаемая инфляция (%)</label>
+                <input type="number" id="input-inflation" value="8">
+                
+                <label>Стоимость недвижимости мечты (₽)</label>
+                <input type="number" id="input-realty-price" value="6000000">
+                
+                <button onclick="runFinancialAnalysis()" class="btn-green">Рассчитать и получить советы ИИ</button>
             </div>
 
-            <!-- Рекомендации ИИ -->
-            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 flex flex-col justify-between">
-                <div>
-                    <h4 class="font-bold text-indigo-600 text-sm mb-3">📋 Автоматические рекомендации ИИ:</h4>
-                    <div id="ai-recommendations" class="text-xs space-y-3 text-gray-600 leading-relaxed">
-                        Введите данные слева и нажмите расчет, чтобы ИИ-агент составил стратегию снижения пассивов и масштабирования капитала.
-                    </div>
+            <div class="ai-box">
+                <h4 style="color: #4f46e5; margin-top: 0;">📋 Рекомендации ИИ-помощника:</h4>
+                <div id="ai-recommendations" style="font-size: 13px; color: #4b5563; line-height: 1.6;">
+                    Введите данные слева и нажмите расчет, чтобы ИИ-агент составил стратегию снижения пассивов.
                 </div>
-                <div class="mt-6 p-4 bg-indigo-50 rounded-lg text-xs text-indigo-700">
-                    <p class="font-semibold">💡 Интеграция с Telegram:</p>
-                    <p class="mt-1 opacity-80">Ваш аккаунт синхронизирован с ботом @HypoSaveBot. Ваши ежедневные траты из мессенджера автоматически обновляют поле "Пассивы".</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Результаты -->
-        <div id="analytics-results" class="hidden mt-12 space-y-12">
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
-                <h3 class="text-xl font-bold mb-4 text-gray-900">График прогноза накопления капитала</h3>
-                <div class="h-64 relative" style="height: 300px;">
-                    <canvas id="forecastChart"></canvas>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-                <div class="p-6 border-b border-gray-200">
-                    <h3 class="text-xl font-bold text-gray-900">Таблица годового планирования</h3>
-                </div>
-                <table class="w-full text-left border-collapse text-sm">
-                    <thead>
-                        <tr class="bg-gray-100 text-gray-500 uppercase text-xs tracking-wider">
-                            <th class="p-4">Период</th>
-                            <th class="p-4">Ваш капитал (с учетом инфляции)</th>
-                            <th class="p-4">Ожидаемый взнос (20%)</th>
-                            <th class="p-4">Статус цели</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-body" class="text-gray-700">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- КНОПКА СВЯЗИ С КУРАТОРОМ -->
-    <div class="fixed bottom-6 right-6 z-50">
+                <div style="margin-top: 30px; background: #e0e7ff; padding: 15px; border-radius: 8px; font-size: 12px; color: #4338ca;">
